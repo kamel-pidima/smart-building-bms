@@ -1,0 +1,64 @@
+spring:
+  application:
+    name: smart-building-bms
+  
+  datasource:
+    url: jdbc:postgresql://localhost:5432/smartbuilding
+    username: ${DB_USERNAME:smartbuilding}
+    password: ${DB_PASSWORD:smartbuilding}
+    driver-class-name: org.postgresql.Driver
+  
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
+  security:
+    user:
+      name: admin
+      password: ${ADMIN_PASSWORD:changeme}
+
+server:
+  port: 8080
+
+# MQTT Configuration
+mqtt:
+  broker:
+    url: ${MQTT_BROKER_URL:tcp://localhost:1883}
+  client:
+    id: smart-building-gateway
+
+# OpenAPI Documentation
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+
+# Logging
+logging:
+  level:
+    com.smartbuilding: DEBUG
+    org.springframework.web: INFO
+    org.hibernate.SQL: DEBUG
+
+# Building Management Settings
+building:
+  hvac:
+    default-temperature: 22.0
+    min-temperature: 15.0
+    max-temperature: 30.0
+  lighting:
+    default-brightness: 80
+    daylight-harvesting-target-lux: 500
+  access:
+    door-unlock-timeout-seconds: 5
+    max-failed-attempts: 3
+  energy:
+    carbon-factor-kg-per-kwh: 0.42
+    peak-demand-alert-threshold-kw: 1000
